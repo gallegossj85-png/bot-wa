@@ -1,4 +1,10 @@
 {
+  "name": "bot-wa",
+  "version": "1.0.0",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js"
+  },
   "dependencies": {
     "@whiskeysockets/baileys": "^7.0.0-rc14",
     "fs-extra": "^11.4.1",
