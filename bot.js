@@ -9,115 +9,14 @@ const LIMITE_SPAM = 12;
 const MAX_LETRAS = 50;
 const MAX_REPETIDO = 3;
 
+// PEGA AQUI TU LISTA ORIGINAL DE MALAS_PALABRAS
 const MALAS_PALABRAS = [
-    'culo', 'coño', 'verga', 'chingar', 'pendejo', 'cabron', 'mierda', 'estupido',
-    'imbécil', 'idiota', 'tonto', 'zorra', 'puta', 'hijueputa', 'hijo de puta',
-    'mamaguevo', 'maldito', 'joder', 'carajo', 'diablo',
-    'fuck', 'shit', 'asshole', 'bastard', 'dick', 'cock', 'pussy',
-    'cunt', 'bitch', 'slut', 'nigger', 'nigga', 'faggot', 'retard', 'wtf', 'stfu',
-    'prick', 'twat', 'wank', 'bollocks', 'knobhead', 'git', 'mong', 'numbnuts',
-    'donkey', 'monkey', 'ape', 'pig', 'dog', 'rat', 'snake', 'viper', 'scorpion',
-    'spider', 'fly', 'bug', 'worm', 'slug', 'snail', 'beetle', 'ant', 'bee', 'wasp',
-    'hornet', 'mosquito', 'tick', 'flea', 'lice', 'roach', 'cricket', 'grasshopper',
-    'locust', 'mantis', 'dragonfly', 'damselfly', 'butterfly', 'moth', 'caterpillar',
-    'larva', 'pupa', 'chrysalis', 'cocoon', 'metamorphosis', 'transformation',
-    'rebirth', 'resurrection', 'immortality', 'eternity', 'infinity', 'universe',
-    'cosmos', 'galaxy', 'star', 'planet', 'moon', 'sun', 'earth', 'water', 'fire',
-    'air', 'wind', 'storm', 'thunder', 'lightning', 'rain', 'snow', 'ice', 'cold',
-    'heat', 'warm', 'hot', 'burn', 'flame', 'ash', 'smoke', 'fog', 'mist', 'cloud',
-    'sky', 'heaven', 'hell', 'paradise', 'valley', 'mountain', 'hill', 'plain', 'desert',
-    'ocean', 'sea', 'lake', 'river', 'stream', 'brook', 'creek', 'spring', 'well', 'fountain',
-    'source', 'origin', 'beginning', 'end', 'finish', 'stop', 'halt', 'pause', 'wait',
-    'time', 'moment', 'second', 'minute', 'hour', 'day', 'week', 'month', 'year',
-    'decade', 'century', 'millennium', 'age', 'era', 'epoch', 'period', 'phase', 'stage',
-    'step', 'level', 'rank', 'grade', 'class', 'type', 'kind', 'sort', 'variety', 'species',
-    'genus', 'family', 'order', 'phylum', 'kingdom', 'domain', 'life', 'death',
-    'birth', 'growth', 'decay', 'rot', 'mold', 'fungus', 'mushroom', 'yeast', 'beer', 'wine',
-    'liquor', 'spirits', 'ghost', 'spirit', 'soul', 'mind', 'body', 'heart', 'brain',
-    'blood', 'bone', 'skin', 'hair', 'nail', 'finger', 'toe', 'hand', 'foot', 'arm', 'leg',
-    'chest', 'back', 'neck', 'head', 'face', 'eye', 'nose', 'mouth', 'lip', 'tooth', 'tongue',
-    'throat', 'voice', 'sound', 'noise', 'silence', 'quiet', 'loud', 'soft', 'hard', 'strong',
-    'weak', 'fast', 'slow', 'quick', 'rapid', 'swift', 'speedy', 'hurry', 'rush', 'dash', 'run',
-    'walk', 'crawl', 'creep', 'slide', 'glide', 'float', 'sink', 'swim', 'dive', 'jump', 'hop',
-    'skip', 'leap', 'bound', 'spring', 'bounce', 'roll', 'turn', 'spin', 'rotate', 'revolve',
-    'orbit', 'circle', 'round', 'square', 'triangle', 'rectangle', 'polygon', 'shape', 'form',
-    'figure', 'design', 'pattern', 'style', 'mode', 'method', 'way', 'means', 'tool', 'instrument',
-    'device', 'machine', 'engine', 'motor', 'gear', 'wheel', 'axle', 'shaft', 'lever', 'pulley',
-    'rope', 'chain', 'link', 'joint', 'connection', 'bond', 'tie', 'knot', 'loop', 'ring', 'band',
-    'strip', 'stripe', 'line', 'row', 'column', 'file', 'queue', 'series', 'sequence', 'order',
-    'arrangement', 'layout', 'plan', 'scheme', 'plot', 'story', 'tale', 'legend', 'myth', 'fable',
-    'allegory', 'metaphor', 'simile', 'analogy', 'comparison', 'contrast', 'difference', 'similarity',
-    'likeness', ' resemblance', 'match', 'pair', 'couple', 'duo', 'twosome', 'team', 'group', 'crowd',
-    'mob', 'gang', 'clique', 'set', 'club', 'society', 'organization', 'institution', 'company',
-    'business', 'firm', 'agency', 'office', 'department', 'division', 'section', 'unit', 'branch',
-    'wing', 'arm', 'force', 'power', 'strength', 'energy', 'vigor', 'vitality', 'living',
-    'being', 'creature', 'animal', 'plant', 'tree', 'flower', 'rose', 'lily', 'tulip',
-    'daisy', 'daffodil', 'iris', 'orchid', 'lotus', 'cactus', 'succulent', 'fern', 'moss', 'lichen',
-    'algae', 'seaweed', 'kelp', 'coral', 'reef', 'island', 'continent', 'world', 'globe', 'sphere',
-    'ball', 'orb', 'comet', 'meteor', 'asteroid', 'space', 'void', 'nothingness', 'emptiness', 'vacuum',
-    'darkness', 'brightness', 'shine', 'blaze', 'inferno', 'volcano', 'eruption', 'explosion', 'blast',
-    'bang', 'boom', 'crash', 'smash', 'break', 'shatter', 'crack', 'split', 'tear', 'rip', 'cut',
-    'slice', 'chop', 'hack', 'slash', 'stab', 'pierce', 'poke', 'prod', 'push', 'pull', 'lift', 'raise',
-    'lower', 'drop', 'fall', 'drown', 'drift', 'flow', 'pour', 'spill', 'splash', 'spray',
-    'downpour', 'deluge', 'flood', 'inundation', 'overflow', 'spillage', 'mess', 'chaos', 'disorder',
-    'confusion', 'trouble', 'problem', 'issue', 'difficulty', 'challenge', 'obstacle', 'barrier',
-    'block', 'wall', 'fence', 'gate', 'door', 'entrance', 'exit', 'avenue', 'boulevard', 'highway',
-    'freeway', 'expressway', 'turnpike', 'tollway', 'underpass', 'overpass', 'crossing',
-    'intersection', 'junction', 'corner', 'angle', 'vertex', 'node', 'hub', 'center', 'middle',
-    'core', 'soul', 'essence', 'character', 'personality', 'identity',
-    'self', 'ego', 'thought', 'idea', 'concept', 'notion', 'belief', 'opinion',
-    'view', 'perspective', 'standpoint', 'position', 'stance', 'attitude', 'approach',
-    'technique', 'strategy', 'blueprint', 'model', 'template', 'format', 'structure', 'framework',
-    'skeleton', 'frame', 'support', 'base', 'foundation', 'ground', 'surface', 'top', 'bottom',
-    'side', 'edge', 'border', 'boundary', 'limit', 'range', 'scope', 'extent', 'reach', 'span',
-    'width', 'length', 'height', 'depth', 'size',
-    'dimension', 'measure', 'scale', 'proportion', 'ratio', 'rate', 'velocity', 'acceleration',
-    'pressure', 'tension', 'stress', 'strain', 'load', 'mass', 'volume', 'density',
-    'gravity', 'magnetism', 'current', 'charge', 'voltage', 'resistance', 'impedance',
-    'conductivity', 'insulation', 'cord', 'string', 'thread', 'yarn', 'wool', 'cotton',
-    'linen', 'silk', 'velvet', 'satin', 'lace', 'net', 'mesh', 'grid', 'matrix', 'array',
-    'chart', 'graph', 'diagram', 'drawing', 'sketch', 'painting', 'photograph', 'snapshot',
-    'portrait', 'landscape', 'scene', 'vision', 'dream', 'fantasy', 'illusion', 'mirage',
-    'hallucination', 'delusion', 'madness', 'insanity', 'lunacy', 'folly', 'wisdom', 'knowledge',
-    'learning', 'academy', 'institute', 'library', 'text', 'document', 'note', 'message',
-    'phrase', 'sentence', 'paragraph', 'chapter', 'volume', 'anthology', 'compilation',
-    'selection', 'option', 'alternative', 'possibility', 'chance', 'fortune', 'destiny',
-    'fate', 'future', 'past', 'history', 'record', 'account', 'report', 'information',
-    'data', 'truth', 'lie', 'fiction', 'allegory', 'symbol', 'sign', 'signal',
-    'indication', 'hint', 'clue', 'trace', 'vestige', 'remnant', 'relic', 'artifact', 'article',
-    'product', 'goods', 'merchandise', 'ware', 'stock', 'supply', 'reserve', 'store',
-    'hoard', 'treasure', 'riches', 'cash', 'coin', 'bill', 'check', 'credit',
-    'debit', 'balance', 'finance', 'investment', 'profit', 'loss', 'gain', 'return',
-    'income', 'revenue', 'sales', 'manufacture', 'creation', 'making', 'construction',
-    'architecture', 'craft', 'skill', 'talent', 'gift', 'ability', 'capacity', 'potential',
-    'force', 'energy', 'vigor', 'vitality', 'existence', 'reality', 'environment',
-    'climate', 'season', 'winter', 'morning', 'afternoon', 'evening', 'midnight', 'noon',
-    'instant', 'flash', 'blink', 'wink', 'nod', 'shake', 'wave', 'gesture', 'motion',
-    'movement', 'action', 'activity', 'operation', 'function', 'process', 'procedure',
-    'system', 'mechanism', 'implement', 'utensil', 'vessel', 'container', 'crate',
-    'barrel', 'cask', 'tank', 'drum', 'flask', 'vial', 'tube', 'hose',
-    'strand', 'fiber', 'coil', 'spring'
+    /* TU LISTA ORIGINAL VA AQUI */
 ];
 
+// PEGA AQUI TU LISTA ORIGINAL DE INSULTOS
 const INSULTOS = [
-    'calla', 'callate', 'cierra', 'cierra la boca', 'shut up', 'shutup',
-    'menso', 'mensa', 'mensos', 'mensas',
-    'baboso', 'babosa', 'bobo', 'boba', 'bobos',
-    'tarado', 'tarada', 'bruto', 'bruta', 'torpe',
-    'tonto', 'tonta', 'tontos', 'idiota', 'idiotas',
-    'estupido', 'estupida', 'imbecil', 'imbeciles',
-    'necio', 'necia', 'sonso', 'sonsa', 'zonzo', 'zonza',
-    'lerdo', 'lerda', 'lento', 'burro', 'burra',
-    'ignorante', 'inutil', 'mediocre',
-    'payaso', 'payasa', 'ridiculo', 'ridicula',
-    'fastidioso', 'fastidiosa', 'molesto', 'molesta',
-    'calla menso', 'calla tonto', 'calla idiota', 'calla baboso', 'calla bobo',
-    'calla bruto', 'calla payaso', 'calla sonso', 'calla tarado',
-    'te callas', 'ya callate', 'callate ya', 'calla boca',
-    'que te calles', 'a callar', 'a dormir', 'vete', 'largate',
-    'no sabes', 'no sirves', 'das pena', 'que pena',
-    'eres tonto', 'eres menso', 'eres idiota', 'eres baboso',
-    'eres bruto', 'eres bobo', 'eres tarado', 'eres estupido'
+    /* TU LISTA ORIGINAL VA AQUI */
 ];
 
 let isConnected = false;
@@ -187,7 +86,6 @@ const SECUENCIAS_DIFICIL = [
     { s: '100, 81, 64, 49, ¿qué sigue?', r: ['36'] },
     { s: '5, 15, 45, ¿qué sigue?', r: ['135'] },
 ];
-// === 30 NUEVOS ===
 const CAPITALES = [
     { q: '¿Cuál es la capital de Francia?', r: ['paris'] },
     { q: '¿Cuál es la capital de España?', r: ['madrid'] },
@@ -312,14 +210,12 @@ function limpiarTexto(t) {
         .replace(/0/g, 'o').replace(/1/g, 'i').replace(/3/g, 'e').replace(/4/g, 'a').replace(/5/g, 's').replace(/7/g, 't')
         .replace(/[^a-z0-9]/g, '');
 }
-
 function limpiarParaFrases(t) {
     return t.toLowerCase()
         .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
         .replace(/0/g, 'o').replace(/1/g, 'i').replace(/3/g, 'e').replace(/4/g, 'a').replace(/5/g, 's').replace(/7/g, 't')
         .replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
 }
-
 function esSpamRepetitivo(textoOriginal) {
     const t = textoOriginal.toLowerCase().trim();
     if (!t) return false;
@@ -339,14 +235,12 @@ function esSpamRepetitivo(textoOriginal) {
 async function startBot() {
     const { state, saveCreds } = await useMultiFileAuthState('./auth_info');
     const logger = pino({ level: 'silent' });
-
     const sock = makeWASocket({
         auth: state,
         logger: logger,
         printQRInTerminal: true,
         generateHighQualityQRCode: true
     });
-
     sock.ev.on('connection.update', async (update) => {
         const { connection, qr, lastDisconnect } = update;
         if (qr && !isConnected) {
@@ -368,9 +262,7 @@ async function startBot() {
             }
         }
     });
-
     sock.ev.on('creds.update', saveCreds);
-
     sock.ev.on('groups.upsert', async (updates) => {
         for (const update of updates) {
             if (update.id) {
@@ -381,7 +273,6 @@ async function startBot() {
             }
         }
     });
-
     sock.ev.on('group-participants.update', async (update) => {
         if (update.id) {
             try {
@@ -390,7 +281,6 @@ async function startBot() {
             } catch (e) {}
         }
     });
-
     async function isUserAdmin(groupJid, participantJid) {
         const botJid = jidNormalizedUser(sock.user.id);
         if (jidNormalizedUser(participantJid) === botJid) return true;
@@ -409,7 +299,6 @@ async function startBot() {
         } catch (e) {}
         return false;
     }
-
     function getTarget(msg, args) {
         const quoted = msg.message.extendedTextMessage?.contextInfo?.participant;
         if (quoted) return jidNormalizedUser(quoted);
@@ -420,7 +309,6 @@ async function startBot() {
         }
         return null;
     }
-
     function crearJuego() {
         const tipo = Math.floor(Math.random() * 42) + 1;
         if (tipo === 1) {
@@ -478,7 +366,6 @@ async function startBot() {
             const s = SECUENCIAS_DIFICIL[Math.floor(Math.random() * SECUENCIAS_DIFICIL.length)];
             return { tipo: 12, respuesta: s.r, pregunta: `🧠 *MINIJUEGO 12 - SUPER DIFICIL - SECUENCIA LOCA*\n\n${s.s}\n¡Piensale bien!` };
         }
-        // === 30 NUEVOS ===
         if (tipo === 13) {
             const t = CAPITALES[Math.floor(Math.random() * CAPITALES.length)];
             return { tipo: 13, respuesta: t.r, pregunta: `🌍 *MINIJUEGO 13 - CAPITALES*\n\n${t.q}` };
@@ -598,7 +485,6 @@ async function startBot() {
         }
         return { tipo: 42, respuesta: ['tijeras'], pregunta: `✂️ *MINIJUEGO 42 - PIEDRA PAPEL O TIJERA*\n\nEl primero que escriba *TIJERAS* gana. ¡Correle!` };
     }
-
     async function iniciarJuego(remoteJid, forzado) {
         const juego = crearJuego();
         juegosActivos[remoteJid] = juego;
@@ -611,25 +497,20 @@ async function startBot() {
             }
         }, 90000);
     }
-
     sock.ev.on('messages.upsert', async ({ messages }) => {
         const msg = messages[0];
         if (!msg.message) return;
         const remoteJid = msg.key.remoteJid;
         if (!remoteJid.endsWith('@g.us')) return;
-
         const text = (msg.message.conversation || msg.message.extendedTextMessage?.text || msg.message.imageMessage?.caption || msg.message.videoMessage?.caption || '').trim();
         const isFromMe = msg.key.fromMe;
         if (isFromMe && !text.startsWith('/')) return;
-
         let sender;
         if (isFromMe) sender = jidNormalizedUser(sock.user.id);
         else sender = msg.key.participant || msg.key.remoteJid;
-
         let isAdmin = false;
         if (isFromMe) isAdmin = true;
         else isAdmin = await isUserAdmin(remoteJid, sender);
-
         if (juegosActivos[remoteJid] && !isFromMe && text && !text.startsWith('/')) {
             const juego = juegosActivos[remoteJid];
             const respLimpia = limpiarParaFrases(text);
@@ -641,105 +522,14 @@ async function startBot() {
             }
             if (text.length <= 20) return;
         }
-
         if (text.startsWith('/')) {
             const args = text.split(' ');
             const cmd = args[0].toLowerCase();
-
             if (cmd === '/aae') {
-                const helpMsg = `*BOT DE MODERACION - AYUDA*
-
-*REGLAS AUTOMATICAS (todos menos admins):*
-1. Maximo 50 letras, si te pasas se borra.
-2. Prohibido repetir letras tipo a a a a.
-3. Prohibido groserias e insultos tipo calla, menso, tonto.
-4. Prohibido TODAS las fotos, videos, stickers y documentos.
-5. Maximo 12 mensajes en 60 seg o te silencia.
-
-*PARA TODOS:*
-/aae : Ver esta ayuda
-/minijuego : Jugar un minijuego (cada 15 min)
-
-*SOLO ADMINS - BOT:*
-/bot pause : Pausa el bot, ya no borra nada
-/bot resume : Vuelve a activar el bot
-/bot status : Te dice si esta ACTIVO o PAUSADO
-/bot restart : Reinicia el bot
-
-*SOLO ADMINS - GRUPO:*
-/cerrar : Cierra el grupo, solo admins pueden hablar
-/abrir : Abre el grupo, todos pueden hablar
-/todos + mensaje : Menciona a todos. Ej: /todos vengan
-/info : Muestra nombre, cuantos hay y quien es admin
-/link : Te da el link del grupo
-/nombre + texto : Cambia el nombre. Ej: /nombre Grupo Nuevo
-/desc + texto : Cambia la descripcion del grupo
-
-*SOLO ADMINS - CASTIGAR:*
-Para estos, responde al mensaje de la persona O mencionala con @
-/kick : Saca a la persona del grupo
-/mute : Silencia a la persona, no puede hablar
-/unmute : Le quita el silencio
-/warn : Le da una advertencia
-/promote : Le da admin
-/demote : Le quita el admin
-/borrar : Borra el mensaje al que respondiste
-
-*SOLO ADMINS - MINIJUEGOS:*
-/forzarjuego : Fuerza un minijuego ya, sin esperar los 15 min.
-
-*MINIJUEGOS (PARA TODOS):*
-/minijuego : Empieza un juego al azar
-¡¡¡AHORA SON 42 JUEGOS!!!
-1. Adivina el numero
-2. Mates rapidas
-3. Trivia
-4. Palabra al reves
-5. Adivina el emoji
-6. Completa la secuencia
-7. El mas rapido (YO)
-8-12. Super dificiles
-13. Capitales
-14. Quimica
-15. Completa el refran
-16. Anagrama
-17. ¿Que animal por su sonido?
-18. Adivina con pista
-19. Completa la palabra
-20. Emoji pelicula
-21. Emoji comida dificil
-22. Logica
-23. Secuencia de letras
-24. Traduce al ingles
-25. Contrario / Antonimo
-26. Geografia
-27. Adivinanza imposible
-28. Escribe la palabra largota
-29. Ciencia
-30. Multiplicacion grande
-31. Suma triple
-32. Resta grande
-33. Potencia
-34. Division
-35. Numero imposible
-36. Meses
-37. Suma grande
-38. Dias
-39. El doble del doble
-40. Logica dificil
-41. Adivinanza clasica
-42. Piedra papel o tijera (TIJERAS)
-El primero que responda bien gana. Solo 1 juego cada 15 min.
-
-*EJEMPLO:*
-Responde al mensaje del que te cae mal y pon /kick
-O pon /kick @Juan
-
-*NOTA:* El bot tiene que ser ADMIN para sacar, silenciar o dar admin.`;
+                const helpMsg = `*BOT DE MODERACION - AYUDA*\n\n*REGLAS AUTOMATICAS (todos menos admins):*\n1. Maximo 50 letras, si te pasas se borra.\n2. Prohibido repetir letras tipo a a a a.\n3. Prohibido groserias e insultos tipo calla, menso, tonto.\n4. Prohibido TODAS las fotos, videos, stickers y documentos.\n5. Maximo 12 mensajes en 60 seg o te silencia.\n\n*PARA TODOS:*\n/aae : Ver esta ayuda\n/minijuego : Jugar un minijuego (cada 15 min)\n\n*SOLO ADMINS - BOT:*\n/bot pause : Pausa el bot, ya no borra nada\n/bot resume : Vuelve a activar el bot\n/bot status : Te dice si esta ACTIVO o PAUSADO\n/bot restart : Reinicia el bot\n\n*SOLO ADMINS - GRUPO:*\n/cerrar : Cierra el grupo, solo admins pueden hablar\n/abrir : Abre el grupo, todos pueden hablar\n/todos + mensaje : Menciona a todos. Ej: /todos vengan\n/info : Muestra nombre, cuantos hay y quien es admin\n/link : Te da el link del grupo\n/nombre + texto : Cambia el nombre. Ej: /nombre Grupo Nuevo\n/desc + texto : Cambia la descripcion del grupo\n\n*SOLO ADMINS - CASTIGAR:*\nPara estos, responde al mensaje de la persona O mencionala con @\n/kick : Saca a la persona del grupo\n/mute : Silencia a la persona, no puede hablar\n/unmute : Le quita el silencio\n/warn : Le da una advertencia\n/promote : Le da admin\n/demote : Le quita el admin\n/borrar : Borra el mensaje al que respondiste\n\n*SOLO ADMINS - MINIJUEGOS:*\n/forzarjuego : Fuerza un minijuego ya, sin esperar los 15 min.\n\n*MINIJUEGOS (PARA TODOS):*\n/minijuego : Empieza un juego al azar\n¡¡¡AHORA SON 42 JUEGOS!!!\nEl primero que responda bien gana. Solo 1 juego cada 15 min.`;
                 await sock.sendMessage(remoteJid, { text: helpMsg });
                 return;
             }
-
             if (cmd === '/minijuego' || cmd === '/juego') {
                 if (juegosActivos[remoteJid]) {
                     await sock.sendMessage(remoteJid, { text: 'Ya hay un juego en curso, responde ese primero!' });
@@ -754,7 +544,6 @@ O pon /kick @Juan
                 await iniciarJuego(remoteJid, false);
                 return;
             }
-
             if (cmd === '/forzarjuego' || cmd === '/forzarminijuego' || cmd === '/forzar') {
                 if (!isAdmin) {
                     try { await sock.sendMessage(remoteJid, { delete: msg.key }); } catch(e) {}
@@ -767,7 +556,6 @@ O pon /kick @Juan
                 await iniciarJuego(remoteJid, true);
                 return;
             }
-
             if (cmd === '/bot') {
                 if (!isAdmin) {
                     try { await sock.sendMessage(remoteJid, { delete: msg.key }); } catch(e) {}
@@ -796,7 +584,6 @@ O pon /kick @Juan
                 await sock.sendMessage(remoteJid, { text: 'Uso: /bot pause | /bot resume | /bot status | /bot restart' });
                 return;
             }
-
             const adminCmds = ['/cerrar','/abrir','/todos','/info','/link','/nombre','/desc','/kick','/mute','/unmute','/warn','/promote','/demote','/borrar'];
             if (adminCmds.includes(cmd)) {
                 if (!isAdmin) {
@@ -888,17 +675,14 @@ O pon /kick @Juan
                     return;
                 }
             }
-
             if (!isAdmin) {
                 try { await sock.sendMessage(remoteJid, { delete: msg.key }); } catch(e) {}
             }
             return;
         }
-
         if (isBotPaused) return;
         if (isFromMe) return;
         if (isAdmin) return;
-
         const m = msg.message;
         const inner = m.viewOnceMessage?.message || m.viewOnceMessageV2?.message || m.ephemeralMessage?.message || m;
         const hasPhoto = !!(inner.imageMessage || m.imageMessage || inner.viewOnceMessage?.message?.imageMessage);
@@ -909,17 +693,14 @@ O pon /kick @Juan
             try { await sock.sendMessage(remoteJid, { delete: msg.key }); console.log('Foto/Video/Sticker borrado de: ' + sender); } catch(e) { console.log('Error borrando foto: ' + e.message); }
             return;
         }
-
         if (text.length > MAX_LETRAS) {
             try { await sock.sendMessage(remoteJid, { delete: msg.key }); console.log('Borrado por largo (' + text.length + ' letras): ' + sender); } catch(e) {}
             return;
         }
-
         if (esSpamRepetitivo(text)) {
             try { await sock.sendMessage(remoteJid, { delete: msg.key }); console.log('Borrado por repetitivo: ' + sender + ' -> ' + text); } catch(e) {}
             return;
         }
-
         const textoLimpio = limpiarTexto(text);
         const textoFrases = limpiarParaFrases(text);
         const tieneMalaPalabra = MALAS_PALABRAS.some(palabra => textoLimpio.includes(limpiarTexto(palabra)));
@@ -930,12 +711,10 @@ O pon /kick @Juan
             }
             return textoFrases.includes(insultoLimpio);
         });
-
         if (tieneMalaPalabra || tieneInsulto) {
             try { await sock.sendMessage(remoteJid, { delete: msg.key }); console.log('Borrado por insulto/groseria: ' + sender + ' -> ' + text); } catch(e) {}
             return;
         }
-
         if (!lastMessages[sender]) lastMessages[sender] = { texto: textoLimpio, count: 1 };
         else {
             if (lastMessages[sender].texto === textoLimpio && textoLimpio.length > 0) {
@@ -949,7 +728,6 @@ O pon /kick @Juan
                 lastMessages[sender] = { texto: textoLimpio, count: 1 };
             }
         }
-
         const now = Date.now();
         if (!spamCounters[sender]) spamCounters[sender] = { count: 1, lastTime: now };
         else {
@@ -966,5 +744,4 @@ O pon /kick @Juan
         }
     });
 }
-
 startBot();
