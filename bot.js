@@ -1,4 +1,4 @@
-const { makeWASocket, useMultiFileAuthState, DisconnectReason, jidNormalizedUser } = require('@whiskeysockets/baileys');
+const { makeWASocket, useMultiFileAuthState, DisconnectReason, jidNormalizedUser } = require('@whiskeysockets/' + 'baileys');
 const pino = require('pino');
 const qrTerminal = require('qrcode-terminal');
 
@@ -9,8 +9,7 @@ const LIMITE_SPAM = 12;
 const MAX_LETRAS = 50;
 const MAX_REPETIDO = 3;
 
-// >>> AQUI PEGAS TU LISTA DE MALAS_PALABRAS <<<<
-// Tu la pones, yo la deje vacia
+// >>> AQUI PEGAS TU LISTA ORIGINAL DE MALAS_PALABRAS QUE ESTA EN TU PRIMER MENSAJE <<<
 const MALAS_PALABRAS = [
     'culo', 'coño', 'verga', 'chingar', 'pendejo', 'cabron', 'mierda', 'estupido',
     'imbécil', 'idiota', 'tonto', 'zorra', 'puta', 'hijueputa', 'hijo de puta',
@@ -99,13 +98,9 @@ const MALAS_PALABRAS = [
     'system', 'mechanism', 'implement', 'utensil', 'vessel', 'container', 'crate',
     'barrel', 'cask', 'tank', 'drum', 'flask', 'vial', 'tube', 'hose',
     'strand', 'fiber', 'coil', 'spring'
-
-    // EJEMPLO: 'palabra1',
-    // EJEMPLO: 'palabra2',
 ];
 
-// >>> AQUI PEGAS TU LISTA DE INSULTOS <<<<
-// Tu la pones, yo la deje vacia
+// >>> AQUI PEGAS TU LISTA ORIGINAL DE INSULTOS QUE ESTA EN TU PRIMER MENSAJE <<<
 const INSULTOS = [
     'calla', 'callate', 'cierra', 'cierra la boca', 'shut up', 'shutup',
     'menso', 'mensa', 'mensos', 'mensas',
@@ -125,8 +120,6 @@ const INSULTOS = [
     'no sabes', 'no sirves', 'das pena', 'que pena',
     'eres tonto', 'eres menso', 'eres idiota', 'eres baboso',
     'eres bruto', 'eres bobo', 'eres tarado', 'eres estupido'
-    // EJEMPLO: 'insulto1',
-    // EJEMPLO: 'insulto2',
 ];
 
 let isConnected = false;
@@ -254,10 +247,10 @@ const COMPLETA_PALABRA = [
 ];
 const EMOJI_PELIS = [
     { e: '🦁👑', r: ['rey leon', 'el rey leon'] },
-    { e: '🧊❄️👑', r: ['【entity-frozen¦canonical_name=frozen】'] },
-    { e: '🕷️🧑', r: ['【entity-spiderman¦canonical_name=spiderman】', 'hombre araña'] },
-    { e: '🦇🧑', r: ['【entity-batman¦canonical_name=batman】'] },
-    { e: '🐭🧀', r: ['ratatouille', '【entity-tom y jerry¦canonical_name=tom y jerry】'] },
+    { e: '🧊❄️👑', r: ['frozen'] },
+    { e: '🕷️🧑', r: ['spiderman', 'hombre araña'] },
+    { e: '🦇🧑', r: ['batman'] },
+    { e: '🐭🧀', r: ['ratatouille', 'tom y jerry'] },
 ];
 const EMOJI_COMIDA_DIFICIL = [
     { e: '🌽🧀🌶️', r: ['elote', 'esquite'] },
@@ -349,28 +342,8 @@ async function startBot() {
         auth: state,
         logger: logger,
         printQRInTerminal: true,
-        generateHighQualityQRCode: true,
-        browser: ['Bot', 'Chrome', '1.0']
+        generateHighQualityQRCode: true
     });
-
-    // ===== AQUI ESTA LO QUE TE AÑADI - CODIGO DE EMPAREJAMIENTO =====
-    if (!sock.authState.creds.registered) {
-        const phoneNumber = process.env.PHONE_NUMBER || '523481813363';
-        const cleanNumber = phoneNumber.replace(/[^0-9]/g, '');
-        setTimeout(async () => {
-            try {
-                const code = await sock.requestPairingCode(cleanNumber);
-                console.log('======================================');
-                console.log('CODIGO DE EMPAREJAMIENTO: ' + code);
-                console.log('======================================');
-                console.log('En WhatsApp ve a: Ajustes > Dispositivos vinculados > Vincular con numero de telefono');
-            } catch (e) {
-                console.log('Error pidiendo codigo:', e.message);
-            }
-        }, 3000);
-    }
-    // ===== FIN DE LO AÑADIDO =====
-
     sock.ev.on('connection.update', async (update) => {
         const { connection, qr, lastDisconnect } = update;
         if (qr && !isConnected) {
@@ -656,7 +629,7 @@ async function startBot() {
             const args = text.split(' ');
             const cmd = args[0].toLowerCase();
             if (cmd === '/aae') {
-                const helpMsg = `*BOT DE MODERACION - AYUDA*\n\n*REGLAS AUTOMATICAS (todos menos admins):*\n1. Maximo 50 letras, si te pasas se borra.\n2. Prohibido repetir letras tipo a a a a.\n3. Prohibido groserias e insultos.\n4. Prohibido TODAS las fotos, videos, stickers y documentos.\n5. Maximo 12 mensajes en 60 seg o te silencia.\n\n*PARA TODOS:*\n/aae : Ver esta ayuda\n/minijuego : Jugar un minijuego (cada 15 min)\n\n*SOLO ADMINS - BOT:*\n/bot pause : Pausa el bot, ya no borra nada\n/bot resume : Vuelve a activar el bot\n/bot status : Te dice si esta ACTIVO o PAUSADO\n/bot restart : Reinicia el bot\n\n*SOLO ADMINS - GRUPO:*\n/cerrar : Cierra el grupo, solo admins pueden hablar\n/abrir : Abre el grupo, todos pueden hablar\n/todos + mensaje : Menciona a todos. Ej: /todos vengan\n/info : Muestra nombre, cuantos hay y quien es admin\n/link : Te da el link del grupo\n/nombre + texto : Cambia el nombre. Ej: /nombre Grupo Nuevo\n/desc + texto : Cambia la descripcion del grupo\n\n*SOLO ADMINS - CASTIGAR:*\nPara estos, responde al mensaje de la persona O mencionala con @\n/kick : Saca a la persona del grupo\n/mute : Silencia a la persona, no puede hablar\n/unmute : Le quita el silencio\n/warn : Le da una advertencia\n/promote : Le da admin\n/demote : Le quita el admin\n/borrar : Borra el mensaje al que respondiste\n\n*SOLO ADMINS - MINIJUEGOS:*\n/forzarjuego : Fuerza un minijuego ya, sin esperar los 15 min.\n\n*MINIJUEGOS (PARA TODOS):*\n/minijuego : Empieza un juego al azar\n¡¡¡AHORA SON 42 JUEGOS!!!\nEl primero que responda bien gana. Solo 1 juego cada 15 min.`;
+                const helpMsg = `*BOT DE MODERACION - AYUDA*\n\n*REGLAS AUTOMATICAS (todos menos admins):*\n1. Maximo 50 letras, si te pasas se borra.\n2. Prohibido repetir letras tipo a a a a.\n3. Prohibido groserias e insultos tipo calla, menso, tonto.\n4. Prohibido TODAS las fotos, videos, stickers y documentos.\n5. Maximo 12 mensajes en 60 seg o te silencia.\n\n*PARA TODOS:*\n/aae : Ver esta ayuda\n/minijuego : Jugar un minijuego (cada 15 min)\n\n*SOLO ADMINS - BOT:*\n/bot pause : Pausa el bot, ya no borra nada\n/bot resume : Vuelve a activar el bot\n/bot status : Te dice si esta ACTIVO o PAUSADO\n/bot restart : Reinicia el bot\n\n*SOLO ADMINS - GRUPO:*\n/cerrar : Cierra el grupo, solo admins pueden hablar\n/abrir : Abre el grupo, todos pueden hablar\n/todos + mensaje : Menciona a todos. Ej: /todos vengan\n/info : Muestra nombre, cuantos hay y quien es admin\n/link : Te da el link del grupo\n/nombre + texto : Cambia el nombre. Ej: /nombre Grupo Nuevo\n/desc + texto : Cambia la descripcion del grupo\n\n*SOLO ADMINS - CASTIGAR:*\nPara estos, responde al mensaje de la persona O mencionala con @\n/kick : Saca a la persona del grupo\n/mute : Silencia a la persona, no puede hablar\n/unmute : Le quita el silencio\n/warn : Le da una advertencia\n/promote : Le da admin\n/demote : Le quita el admin\n/borrar : Borra el mensaje al que respondiste\n\n*SOLO ADMINS - MINIJUEGOS:*\n/forzarjuego : Fuerza un minijuego ya, sin esperar los 15 min.\n\n*MINIJUEGOS (PARA TODOS):*\n/minijuego : Empieza un juego al azar\n¡¡¡AHORA SON 42 JUEGOS!!!\nEl primero que responda bien gana. Solo 1 juego cada 15 min.`;
                 await sock.sendMessage(remoteJid, { text: helpMsg });
                 return;
             }
